@@ -5,13 +5,25 @@ services:
     image: postgres:15
     container_name: postgres-inventario
     environment:
-      POSTGRES_DB: inventario_db
-      POSTGRES_USER: admin
-      POSTGRES_PASSWORD: supersayayin21
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
     ports:
       - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
+
+  api-inventario:
+    build: .
+    container_name: java-api-inventario
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db-inventario
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db-inventario:5432/${DB_NAME}
+      SPRING_DATASOURCE_USERNAME: ${DB_USER}
+      SPRING_DATASOURCE_PASSWORD: ${DB_PASSWORD}
 
 volumes:
   postgres_data:

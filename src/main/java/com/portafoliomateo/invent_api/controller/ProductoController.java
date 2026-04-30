@@ -4,49 +4,63 @@ import com.portafoliomateo.invent_api.model.Producto;
 import com.portafoliomateo.invent_api.service.ProductoService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController 
+@RestController
 @RequestMapping("/api/productos")
-// NUEVO: Nombra y describe todo el grupo de botones
-@Tag(name = "Catálogo de Productos", description = "Operaciones principales para gestionar los artículos del almacén")
+@Tag(name = "Gestión de Inventario", description = "Endpoints para el control total de stock y productos")
 public class ProductoController {
 
     @Autowired
     private ProductoService service;
 
-    // NUEVO: Explica qué hace este botón específico
-    @Operation(summary = "Añadir Nuevo Artículo", description = "Registra un producto completamente nuevo en el sistema con su información financiera y de stock.")
-    @PostMapping
-    public Producto crearProducto(@RequestBody Producto producto) {
-        return service.guardarProducto(producto);
-    }
-
-    @Operation(summary = "Ver Catálogo Completo", description = "Obtiene la lista de todos los artículos registrados actualmente en la base de datos.")
+    @Operation(summary = "Listar todos los productos")
     @GetMapping
-    public List<Producto> listarTodos() {
+    public List<Producto> listar() {
         return service.obtenerTodos();
     }
 
-    @Operation(summary = "Alertas de Stock Crítico", description = "Filtra y muestra de forma automática solo los productos que están por debajo de su nivel de stock de seguridad.")
+    @Operation(summary = "Obtener un producto por su ID")
+    @GetMapping("/{id}")
+    public ResponseEntity<Producto> obtenerPorId(@PathVariable Long id) {
+        return service.obtenerPorId(id)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+    }
+
+    @Operation(summary = "Buscar productos por categoría")
+    @GetMapping("/buscar")
+    public List<Producto> buscarPorCategoria(@RequestParam String categoria) {
+        return service.obtenerPorCategoria(categoria);
+    }
+
+    @Operation(summary = "Registrar un nuevo producto")
+    @PostMapping
+    public Producto crear(@Valid @RequestBody Producto producto) {
+        return service.guardarProducto(producto);
+    }
+
+    @Operation(summary = "Actualizar stock o datos de un producto existente")
+    @PutMapping("/{id}")
+    public ResponseEntity<Producto> actualizar(@PathVariable Long id, @Valid @RequestBody Producto producto) {
+        Producto actualizado = service.actualizarProducto(id, producto);
+        return (actualizado != null) ? ResponseEntity.ok(actualizado) : ResponseEntity.notFound().build();
+    }
+
+    @Operation(summary = "Obtener productos con stock bajo (Alertas)")
     @GetMapping("/alertas")
-    public List<Producto> listarAlertas() {
+    public List<Producto> obtenerAlertas() {
         return service.obtenerAlertas();
     }
 
-    @Operation(summary = "Eliminar Producto Obsoleto", description = "Remueve permanentemente un artículo del inventario buscando por su número de ID único.")
+    @Operation(summary = "Eliminar un producto del sistema")
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> eliminarProducto(@PathVariable Long id) {
-        boolean eliminado = service.eliminarProducto(id);
-        
-        if (eliminado) {
-            return ResponseEntity.ok("Producto eliminado correctamente.");
-        } else {
-            return ResponseEntity.status(404).body("Error: El producto con ID " + id + " no existe.");
-        }
+    public ResponseEntity<Void> eliminar(@PathVariable Long id) {
+        return service.eliminarProducto(id) ? ResponseEntity.ok().build() : ResponseEntity.notFound().build();
     }
 }

@@ -1,8 +1,19 @@
+import os
+from dotenv import load_dotenv
 import psycopg2
 import pandas as pd
-import matplotlib.pyplot as plt
-import os
-from datetime import datetime
+
+# Cargar las variables del archivo .env
+load_dotenv()
+
+# Usar las variables cargadas
+conexion = psycopg2.connect(
+    host="localhost",
+    port="5432",
+    database=os.getenv('DB_NAME'),
+    user=os.getenv('DB_USER'),
+    password=os.getenv('DB_PASSWORD')
+)
 
 # Configuración de carpetas para mantener el proyecto limpio
 CARPETA_REPORTES = 'reportes_generados'
