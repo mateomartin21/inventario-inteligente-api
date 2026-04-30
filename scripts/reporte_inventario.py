@@ -2,7 +2,8 @@ import os
 from dotenv import load_dotenv
 import psycopg2
 import pandas as pd
-
+import matplotlib.pyplot as plt  
+from datetime import datetime
 # Cargar las variables del archivo .env
 load_dotenv()
 
