@@ -1,5 +1,7 @@
 # 📦 Inventario Inteligente API & Data Analysis
 
+[![Docker Hub](https://img.shields.io/badge/Docker_Image-v1-blue?logo=docker)](https://hub.docker.com/r/mateomartin21/inventario-api)
+
 ¡Bienvenido/a al repositorio de **Inventario Inteligente**! 
 Este proyecto es una solución backend integral diseñada para optimizar el control de stock de una tienda, combinando el poder del desarrollo de software tradicional con la ciencia de datos para proporcionar visión financiera en tiempo real.
 
@@ -17,7 +19,8 @@ En el entorno de los negocios digitales, un simple registro de productos no es s
 
 **Base de Datos & Infraestructura:**
 * PostgreSQL
-* Docker & Docker Compose
+* Docker & Docker Hub (Imagen Pública)
+* Docker Compose
 
 **Análisis de Datos & Reportes:**
 * Python 3
@@ -32,21 +35,18 @@ En el entorno de los negocios digitales, un simple registro de productos no es s
 
 ## 📊 Características Principales
 
-1. **API RESTful Blindada y CRUD Completo:** Endpoints robustos para la creación, lectura, **actualización** y eliminación de productos. Implementa **Jakarta Validation** para proteger la integridad de los datos (evita precios negativos o vacíos) y manejo de excepciones (ej. `404 Not Found`).
-2. **Lógica de Negocio Optimizada (JPQL):** Endpoint específico que detecta productos cuyo stock ha caído por debajo de su umbral mínimo. Esta lógica se procesa directamente en la base de datos para garantizar un alto rendimiento.
-3. **Persistencia y Seguridad Profesional:** Base de datos relacional PostgreSQL ejecutándose en un contenedor Docker. Las credenciales están protegidas mediante **variables de entorno (`.env`)**, cumpliendo con los estándares de seguridad de la industria.
-4. **Módulo Ejecutivo de Python:** Un script automatizado que extrae los datos de la base de datos y genera:
-   * Un resumen financiero en consola.
-   * Un dashboard con gráficas de barras (estado del stock) y de pastel (distribución de inversión).
-   * Un reporte estructurado en Excel (`.xlsx`) con múltiples hojas.
-5. **Documentación Interactiva:** Interfaz gráfica generada por Swagger para probar los endpoints sin necesidad de clientes externos, incluyendo filtros de búsqueda por categoría.
+1. **API RESTful Blindada y CRUD Completo:** Endpoints robustos para la creación, lectura, actualización y eliminación de productos. Implementa **Jakarta Validation** para proteger la integridad de los datos y un **@ControllerAdvice** para el manejo global de excepciones (ej. respuestas limpias `404 Not Found` y `400 Bad Request`).
+2. **Lógica de Negocio Optimizada (JPQL):** Endpoint específico que detecta productos cuyo stock ha caído por debajo de su umbral mínimo procesado directamente en PostgreSQL.
+3. **Persistencia y Seguridad Profesional:** Base de datos relacional y API ejecutándose en contenedores Docker. Las credenciales están protegidas mediante **variables de entorno (`.env`)**.
+4. **Imagen Pública en Docker Hub:** El artefacto del backend está compilado mediante un *Multi-stage build* y publicado para su descarga global.
+5. **Módulo Ejecutivo de Python:** Un script automatizado que extrae los datos y genera un resumen en consola, un dashboard visual y un reporte en Excel (`.xlsx`).
 
 ---
 
 ## ⚙️ Instrucciones de Ejecución
 
 ### 1. Configuración de Seguridad
-Antes de iniciar, crea un archivo `.env` en la raíz del proyecto basándote en el archivo de ejemplo (`.env.example`) para configurar tus credenciales locales:
+Crea un archivo `.env` en la raíz del proyecto basándote en el archivo `.env.example` para configurar tus credenciales locales:
 ```env
 DB_NAME=inventario_db
 DB_USER=tu_usuario
