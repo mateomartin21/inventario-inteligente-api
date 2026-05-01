@@ -20,11 +20,11 @@ try:
 
     # Usar las variables cargadas
     conexion = psycopg2.connect(
-    host="localhost",
-    port="5432",
-    database=os.getenv('DB_NAME'),
-    user=os.getenv('DB_USER'),
-    password=os.getenv('DB_PASSWORD')
+        host="localhost",
+        port="5432",
+        database=os.getenv('DB_NAME'),
+        user=os.getenv('DB_USER'),
+        password=os.getenv('DB_PASSWORD')
 )
 
 
