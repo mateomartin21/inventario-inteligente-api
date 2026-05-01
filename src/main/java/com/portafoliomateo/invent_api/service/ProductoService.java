@@ -1,5 +1,6 @@
 package com.portafoliomateo.invent_api.service;
 
+import com.portafoliomateo.invent_api.exception.ProductoNotFoundException;
 import com.portafoliomateo.invent_api.model.Producto;
 import com.portafoliomateo.invent_api.repository.ProductoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,6 +52,6 @@ public class ProductoService {
             existente.setPrecio(datosNuevos.getPrecio());
             existente.setCategoria(datosNuevos.getCategoria());
             return repository.save(existente);
-        }).orElseThrow(() -> new RuntimeException("Producto con ID " + id + " no encontrado"));
+        }).orElseThrow(() -> new ProductoNotFoundException(id)); // <-- Este es el cambio
     }
 }
