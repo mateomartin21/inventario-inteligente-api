@@ -57,7 +57,7 @@ Asegúrate de tener Docker Desktop ejecutándose. En la terminal, sitúate en la
 ```bash
 docker compose up --build -d
 ```
-Nota: La API estará escuchando en el puerto 8080. Puedes acceder a la documentación interactiva en: http://localhost:8080/swagger-ui/index.html
+Nota: Docker descargará automáticamente la imagen mateomartin21/inventario-api:v1 y levantará la base de datos PostgreSQL. La API estará escuchando en el puerto 8080. Documentación interactiva en: http://localhost:8080/swagger-ui/index.html
 
 3. Generar Reportes (Módulo Python)
 Para ejecutar el análisis de datos, abre una nueva terminal, instala las dependencias necesarias y corre el script:
