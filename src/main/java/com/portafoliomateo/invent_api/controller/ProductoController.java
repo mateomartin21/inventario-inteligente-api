@@ -48,8 +48,7 @@ public class ProductoController {
     @Operation(summary = "Actualizar stock o datos de un producto existente")
     @PutMapping("/{id}")
     public ResponseEntity<Producto> actualizar(@PathVariable Long id, @Valid @RequestBody Producto producto) {
-        Producto actualizado = service.actualizarProducto(id, producto);
-        return (actualizado != null) ? ResponseEntity.ok(actualizado) : ResponseEntity.notFound().build();
+        return ResponseEntity.ok(service.actualizarProducto(id, producto));
     }
 
     @Operation(summary = "Obtener productos con stock bajo (Alertas)")

@@ -4,17 +4,6 @@ import psycopg2
 import pandas as pd
 import matplotlib.pyplot as plt  
 from datetime import datetime
-# Cargar las variables del archivo .env
-load_dotenv()
-
-# Usar las variables cargadas
-conexion = psycopg2.connect(
-    host="localhost",
-    port="5432",
-    database=os.getenv('DB_NAME'),
-    user=os.getenv('DB_USER'),
-    password=os.getenv('DB_PASSWORD')
-)
 
 # Configuración de carpetas para mantener el proyecto limpio
 CARPETA_REPORTES = 'reportes_generados'
@@ -26,14 +15,18 @@ fecha_actual = datetime.now().strftime("%Y-%m-%d_%H-%M")
 try:
     print("--- INICIANDO SISTEMA DE ANÁLISIS DE INVENTARIO ---")
     
-    # 1. Conexión a la base de datos (Docker)
+    # Cargar las variables del archivo .env
+    load_dotenv()
+
+    # Usar las variables cargadas
     conexion = psycopg2.connect(
-        host="localhost",
-        port="5432",
-        database="inventario_db",
-        user="admin",
-        password="supersayayin21"
-    )
+    host="localhost",
+    port="5432",
+    database=os.getenv('DB_NAME'),
+    user=os.getenv('DB_USER'),
+    password=os.getenv('DB_PASSWORD')
+)
+
 
     # 2. Extracción y Limpieza de Datos
     query = "SELECT id, nombre, sku, cantidad_actual, stock_minimo, precio, categoria FROM producto;"

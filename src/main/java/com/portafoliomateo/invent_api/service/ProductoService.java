@@ -51,6 +51,6 @@ public class ProductoService {
             existente.setPrecio(datosNuevos.getPrecio());
             existente.setCategoria(datosNuevos.getCategoria());
             return repository.save(existente);
-        }).orElse(null); 
+        }).orElseThrow(() -> new RuntimeException("Producto con ID " + id + " no encontrado"));
     }
 }
