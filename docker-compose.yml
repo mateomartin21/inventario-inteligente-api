@@ -14,7 +14,7 @@ services:
       - postgres_data:/var/lib/postgresql/data
 
   api-inventario:
-    build: .
+    image: mateomartin21/inventario-api:v1
     container_name: java-api-inventario
     ports:
       - "8080:8080"
