@@ -109,6 +109,12 @@ Los reportes gráficos y en Excel se guardarán en `scripts/reportes_generados/`
 
 ---
 
+📸 Evidencia Visual
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/07d7f195-b09a-487f-863a-4ff4e3c56ad4" />
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/5e9c6d9e-08e1-42d1-8fb4-2c1296bdd8c3" />
+
+---
+
 ## 🏗️ Arquitectura del Proyecto
 
 ```
